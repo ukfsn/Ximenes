@@ -18,6 +18,7 @@ WriteMakefile(
         'Dancer::Plugin::DBIC' => 0,
         'Dancer::Plugin::Auth::RBAC::Credentials::DBIC' => 0,
         'DBIx::Class::EncodedColumn' => 0,
+        'DBIx::Class::InflateColumn::DateTime' => 0,
         'DBIx::Class' => 0,
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
