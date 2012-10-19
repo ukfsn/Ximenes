@@ -1,19 +1,21 @@
 use utf8;
-package Ximenes::DB::Result::Baptism;
+package Ximenes::DB::Result::Marriage;
 
 use strict;
 use warnings;
 
 use base 'DBIx::Class::Core';
 
-__PACKAGE__->table("baptism");
+__PACKAGE__->table("marriage");
 
 __PACKAGE__->load_components(qw/InflateColumn::DateTime/);
 
 __PACKAGE__->add_columns(
   "id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "person",
+  "groom",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
+  "bride",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 0 },
   "date",
   { data_type => "date", is_nullable => 0 },
@@ -25,10 +27,16 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("id");
 
 __PACKAGE__->belongs_to(
-  "person",
+  "groom",
   "Ximenes::DB::Result::Person",
-  { id => "person" }
+  { id => "groom" }
 );
+
+__PACKAGE__->belongs_to(
+  "bride",
+  "Ximenes::DB::Result::Person",
+  { id => "bride" }
+);  
 
 __PACKAGE__->belongs_to(
   "minister",
@@ -37,9 +45,9 @@ __PACKAGE__->belongs_to(
 );  
 
 __PACKAGE__->has_many(
-  "sponsors",
-  "Ximenes::DB::Result::BaptismSponsor",
-  { "foreign.baptism" => "self.id" }
+  "witness",
+  "Ximenes::DB::Result::Witness",
+  { "foreign.marriage" => "self.id" }
 );
 
 
